@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputBox from "./components/InputBox";
 import useCurrencyInfo from "./customHooks/useCurrencyInfo";
 
@@ -19,9 +19,12 @@ function App() {
   }
 
   function convert() {
-    setToAmount(fromAmount * allCurrencyInfo[toCurrencyType]);
+    const convertedValue = fromAmount * allCurrencyInfo[toCurrencyType];
+    setToAmount(convertedValue.toFixed(2));
   }
-
+  useEffect(() => {
+    convert();
+  }, [fromAmount, fromCurrencyType, swap]);
   return (
     <div className="w-full h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex justify-center items-center flex-col gap-6 px-4">
       {/* Heading */}
@@ -61,12 +64,12 @@ function App() {
       </div>
 
       {/* Convert Button */}
-      <button
+      {/* <button
         className="bg-green-600 text-white text-lg px-8 py-3 rounded-lg shadow-md border border-green-700 transition-all duration-300 hover:scale-110 hover:bg-green-800"
         onClick={convert}
       >
         Convert {fromCurrencyType.toUpperCase()} to {toCurrencyType.toUpperCase()}
-      </button>
+      </button> */}
     </div>
   );
 }
